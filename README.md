@@ -3,6 +3,9 @@
 **Author**: Bryce Pfingston, Steve Ngo
 **Version**: 1.0.0 (increment the patch/fix version number if you make more commits past your first submission)
 
+[Can Of Books Netlify](canofbooksaboutsteveandbryce.netlify.app)
+[Backend](https://github.com/BryceandSteve/can-of-books-backend)
+
 ## Overview
 
 An app to track what books have impacted the user, and what’s recommended to read next, based on the selections.
@@ -89,6 +92,3 @@ Between Steve and Bryce
 
 - How will you approach each other and the challenge of building an application knowing that it is impossible for two people to be at the exact same place in understanding and skill level?
   - We will again talk to each like adults, and explain things that confuse one another.
-
-
-
