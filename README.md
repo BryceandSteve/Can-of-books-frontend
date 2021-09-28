@@ -18,35 +18,35 @@ An app to track what books have impacted the user, and what’s recommended to r
 
 ## Change Log
 
-Name of feature: ________________________________
+Name of feature: Set up your repositories(agreement as well)
 
-Estimate of time needed to complete: _____
+Estimate of time needed to complete: 1 hour
 
-Start time: _____
+Start time: 2:00
 
-Finish time: _____
+Finish time: 4:00
 
-Actual time needed to complete: _____
+Actual time needed to complete: 2 hours
 
-Name of feature: ________________________________
+Name of feature: Storage
 
-Estimate of time needed to complete: _____
+Estimate of time needed to complete: 3 hours
 
-Start time: _____
+Start time: 4:00
 
-Finish time: _____
+Finish time: 7:00(took a break)
 
-Actual time needed to complete: _____
+Actual time needed to complete: 3 hours
 
-Name of feature: ________________________________
+Name of feature: Book Component
 
-Estimate of time needed to complete: _____
+Estimate of time needed to complete: 45
 
-Start time: _____
+Start time: 8:00
 
-Finish time: _____
+Finish time: 12:30
 
-Actual time needed to complete: _____
+Actual time needed to complete: 4:30
 
 ## Estimates
 <!-- See below -->
