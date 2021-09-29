@@ -14,14 +14,15 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      user: null,
+      user: false,
     }
   }
 
-  loginHandler = (user) => {
+  loginHandler = (event) => {
+    event.preventDefault()
     this.setState({
-      user,
-    })
+      user: true,
+    });
   }
 
   logoutHandler = () => {
@@ -40,6 +41,7 @@ class App extends React.Component {
               <BestBooks />
             </Route>
             {/* TODO: add a route with a path of '/profile' that renders a `Profile` component */}
+
           </Switch>
           <Footer />
         </Router>
