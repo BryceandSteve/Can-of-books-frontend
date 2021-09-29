@@ -18,7 +18,8 @@ export default class BestBooks extends Component {
   }
 
 async getBooks() {
-  let bookAPI = 'http://localhost:3003/books';
+  let server = process.env.REACT_APP_SERVER;
+  let bookAPI = `${server}/books`
 
   try {
     const response = await axios.get (bookAPI);

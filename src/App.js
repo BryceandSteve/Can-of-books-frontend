@@ -1,7 +1,10 @@
 import React from 'react';
+import axios from 'axios';
 import Header from './Header';
 import Footer from './Footer';
+import CreateBook from './BookFormModal'
 import BestBooks from './BestBooks'
+// import Container from 'react-bootstrap/Container'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {
   BrowserRouter as Router,
@@ -9,7 +12,9 @@ import {
   Route
 } from "react-router-dom";
 
-class App extends React.Component {
+
+const server = process.env.REACT_APP_SERVER
+export default class App extends React.Component {
 
   constructor(props) {
     super(props);
@@ -17,6 +22,15 @@ class App extends React.Component {
       user: false,
     }
   }
+
+handleBookCreate = async (bookInfo) =>{
+  var newBookInfo = await axios.post(`${server}/books`, bookInfo)
+  var bookData = newBookInfo.data
+  console.log(bookData);
+  // this.setState({
+    
+  // })
+}
 
   loginHandler = (event) => {
     event.preventDefault()
@@ -36,12 +50,13 @@ class App extends React.Component {
       <>
         <Router>
           <Header user={this.state.user} onLogout={this.logoutHandler} />
+
           <Switch>
             <Route exact path="/">
               <BestBooks />
             </Route>
             {/* TODO: add a route with a path of '/profile' that renders a `Profile` component */}
-
+              <Route path="/bookForm"> <CreateBook onCreate={this.handleBookCreate}/></Route>
           </Switch>
           <Footer />
         </Router>
@@ -50,4 +65,4 @@ class App extends React.Component {
   }
 }
 
-export default App;
+
