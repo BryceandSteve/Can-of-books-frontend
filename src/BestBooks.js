@@ -18,10 +18,10 @@ export default class BestBooks extends Component {
   }
 
 async getBooks() {
-  let apiURL = 'http://localhost:3003/books';
+  let bookAPI = 'http://localhost:3003/books';
 
   try {
-    const response = await axios.get (apiURL);
+    const response = await axios.get (bookAPI);
     const bookData = response.data;
     if(bookData.length > 0) {
     this.setState({ books: bookData});
@@ -33,26 +33,25 @@ async getBooks() {
 }
 
   render() {
-
-    
-
     return (
       <>
-        <h2>My Essential Lifelong Learning &amp; Formation Shelf</h2>
         <Carousel>
-         
-         {this.state.books.map((bookdata, index) => 
-         <Carousel.Item key={index}> 
-          <h1>{bookdata.Title}</h1>  
-          <h4>{bookdata.description}
-          {bookdata.email}
-          {bookdata.status} </h4>
-          
+         {this.state.books ? this.state.books.map((bookdata, index) => (
+          <Carousel.Item key={index}> 
+          <img
+          className="d-block w-100"
+          src="https://cdn.pixabay.com/photo/2018/02/17/09/33/fantasy-3159493_960_720.jpg"
+          alt={bookdata.Title}
+          />
+          <Carousel.Caption>
+          <h1>{bookdata.Title}</h1>
+          <h4>{bookdata.description}</h4>
+          <p>{bookdata.status} </p>
+          </Carousel.Caption>
         </Carousel.Item>
-        )}
+        )
+        ) : <h1>Sorry this book is unavailable! Please search for another.</h1> }
         </Carousel>
-
-        {this.state.emptyMessage && <h1>{this.state.emptyMessage}</h1> }
       </>
     )
   }
