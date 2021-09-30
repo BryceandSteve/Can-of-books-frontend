@@ -4,6 +4,9 @@ import Header from './Header';
 import Footer from './Footer';
 import CreateBook from './BookFormModal'
 import BestBooks from './BestBooks'
+import UpdateBook from './Updatebook'
+import Login from './Login'
+import Profile from './Profile'
 // import Container from 'react-bootstrap/Container'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {
@@ -11,7 +14,7 @@ import {
   Switch,
   Route
 } from "react-router-dom";
-import axios from 'axios';
+
 
 
 const server = process.env.REACT_APP_SERVER
@@ -20,18 +23,31 @@ export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      user: false,
+      user: undefined,
     }
   }
 
-handleBookCreate = async (bookInfo) =>{
-  var newBookInfo = await axios.post(`${server}/books`, bookInfo)
-  var bookData = newBookInfo.data
-  console.log(bookData);
-  // this.setState({
-    
-  // })
-}
+  async getBooks() {
+    let bookAPI = `${server}/books`
+    if(this.props.user.email){ 
+      bookAPI += `?email=${this.props.user.email}`
+    } try {
+      const response = await axios.get (bookAPI);
+      const bookData = response.data;
+      if(bookData.length > 0) {
+      this.setState({ books: bookData});
+    } else {
+      this.setState({ bookAmount: 'All the books are gone' });
+    }} catch (error) {
+      console.log('ErRor 404');
+    }
+  }
+
+  handleBookCreate = async (bookInfo) =>{
+    var newBookInfo = await axios.post(`${server}/books`, bookInfo)
+    var bookData = newBookInfo.data
+    console.log(bookData);
+  }
 
   loginHandler = (event) => {
     event.preventDefault()
@@ -42,7 +58,7 @@ handleBookCreate = async (bookInfo) =>{
 
   logoutHandler = () => {
     this.setState({
-      user: null,
+      user: undefined,
     })
   }
 
@@ -62,20 +78,18 @@ handleBookCreate = async (bookInfo) =>{
     return (
       <>
         <Router>
-          <Header user={this.state.user} onLogout={this.logoutHandler} />
-
-          <Switch>
-            <Route exact path="/">
-              <BestBooks handleDelete={this.handleDelete} />
-            </Route>
-            {/* TODO: add a route with a path of '/profile' that renders a `Profile` component */}
-              <Route path="/bookForm"> <CreateBook onCreate={this.handleBookCreate}/></Route>
-          </Switch>
+          <Header />
+            <Switch>
+              <Route exact path="/">{this.state.user ? ( <BestBooks user={this.state.user} /> ):( <Login user={this.state.user} loginHandler={this.loginHandler} />)} </Route>
+              <Route exact path="/BestBooks">{this.state.user ? (<BestBooks onDelete={this.handleDelete} getBooks={this.getBooks}/> ):( <Login />)}</Route>
+              <Route path="/CreateBook">{this.state.user ? <CreateBook  handleBookCreate={this.handleBookCreate}/> : <Login />}</Route>
+              <Route path="/UpdateBook">{this.state.user ? <UpdateBook onUpdate={this.handleBookUpdate}/> : <Login />}</Route>
+              <Route path="/profile">{this.state.user ? (<Profile user={this.state.user} logoutHandler={this.logoutHandler}/> ): (<Login />)} </Route>
+            </Switch>
           <Footer />
         </Router>
       </>
     )
   }
 }
-
 

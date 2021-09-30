@@ -2,15 +2,17 @@ import axios from "axios";
 import { Component } from "react";
 import Carousel from "react-bootstrap/Carousel";
 import Button from "react-bootstrap/Button";
+var server = process.env.REACT_APP_SERVER;
+
+
 export default class BestBooks extends Component {
+  
   constructor(props) {
     super(props);
     this.state = {
       books:[],
       bookAmount: '',
-
     };
-
   }
 
   componentDidMount() {
@@ -18,10 +20,10 @@ export default class BestBooks extends Component {
   }
 
 async getBooks() {
-  let server = process.env.REACT_APP_SERVER;
   let bookAPI = `${server}/books`
-
-  try {
+  if(this.props.user.email){ 
+    bookAPI += `?email=${this.props.user.email}`
+  } try {
     const response = await axios.get (bookAPI);
     const bookData = response.data;
     if(bookData.length > 0) {
@@ -65,9 +67,7 @@ class Book extends Component {
           />
           <Carousel.Caption>
           <h1>{this.props.info.title}</h1>
-          <h4>{this.props.info.description}</h4>
-          <p>{this.props.info.status} </p>
-          
+          <h4>{this.props.info.description}</h4>          
           <Button variant="danger" onClick={() => this.props.onDelete(this.props.info._id, this.props.info.email)}>Delete</Button>
           </Carousel.Caption>
       </>
