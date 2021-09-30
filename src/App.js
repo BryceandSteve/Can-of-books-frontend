@@ -66,8 +66,16 @@ handleBookCreate = async (bookInfo) =>{
 
           <Switch>
             <Route exact path="/">
-              <BestBooks handleDelete={this.handleDelete} />
+              {
+                this.state.user ? (
+                  <BestBooks handleDelete={this.handleDelete} /> 
+                ) : (
+                  <Login onLogin={this.loginHandler} />
+                )
+              }
             </Route>
+
+
             {/* TODO: add a route with a path of '/profile' that renders a `Profile` component */}
               <Route path="/bookForm"> <CreateBook onCreate={this.handleBookCreate}/></Route>
           </Switch>
