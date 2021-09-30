@@ -11,6 +11,7 @@ import {
   Switch,
   Route
 } from "react-router-dom";
+import axios from 'axios';
 
 
 const server = process.env.REACT_APP_SERVER
@@ -45,6 +46,18 @@ handleBookCreate = async (bookInfo) =>{
     })
   }
 
+  handleDelete = async (id, email) => {
+    console.log(id);
+    await axios.delete('http://localhost:3003/books/' + id + '/?email=' + email);
+    this.getBooks();
+  }
+
+  getBooks = async () => {
+    let booksResponse = await axios.get('http://localhost:3003/books');
+    let bookData = booksResponse.data;
+    this.setState({ books: bookData });
+  };
+
   render() {
     return (
       <>
@@ -53,7 +66,7 @@ handleBookCreate = async (bookInfo) =>{
 
           <Switch>
             <Route exact path="/">
-              <BestBooks />
+              <BestBooks handleDelete={this.handleDelete} />
             </Route>
             {/* TODO: add a route with a path of '/profile' that renders a `Profile` component */}
               <Route path="/bookForm"> <CreateBook onCreate={this.handleBookCreate}/></Route>
