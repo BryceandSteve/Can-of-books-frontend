@@ -4,14 +4,12 @@ import Carousel from "react-bootstrap/Carousel";
 import Button from "react-bootstrap/Button";
 var server = process.env.REACT_APP_SERVER;
 
-
 export default class BestBooks extends Component {
-  
   constructor(props) {
     super(props);
     this.state = {
-      books:[],
-      bookAmount: '',
+      books: [],
+      bookAmount: "",
     };
   }
 
@@ -19,57 +17,69 @@ export default class BestBooks extends Component {
     this.getBooks();
   }
 
-async getBooks() {
-  let bookAPI = `${server}/books`
-  if(this.props.user.email){ 
-    bookAPI += `?email=${this.props.user.email}`
-  } try {
-    const response = await axios.get (bookAPI);
-    const bookData = response.data;
-    if(bookData.length > 0) {
-    this.setState({ books: bookData});
-  } else {
-    this.setState({ bookAmount: 'All the books are gone' });
-  }} catch (error) {
-    console.log('ErRor 404');
-  }
-}
-
-  render() {
-    return (
-      <>
-        <Carousel>
-         {this.state.books ? this.state.books.map((bookdata, index) => (
-          <Carousel.Item key={index}> 
-            <Book info={bookdata} onDelete={this.props.handleDelete}/>
-          </Carousel.Item >
-        )
-        ) : <h1>Sorry this book is unavailable! Please search for another.</h1> }
-        </Carousel>
-      </>
-    )
-  }
-}
-
-class Book extends Component {
-
-  handleDelete = () => {
-    this.props.onDelete(this.props.info);
+  getBooks = async () => {
+    let bookAPI = `${server}/books`;
+    console.log(this.props.user);
+    if (this.props.user.Email) {
+      bookAPI += `?email=${this.props.user.Email}`;
+    }
+    try {
+      const response = await axios.get(bookAPI);
+      const bookData = response.data;
+      if (bookData.length > 0) {
+        this.setState({ books: bookData });
+      } else {
+        this.setState({ bookAmount: "All the books are gone" });
+      }
+    } catch (error) {
+      console.log("ErRor 404");
+    }
   };
 
   render() {
     return (
       <>
-         <img
+        <Carousel>
+          {this.state.books ? (
+            this.state.books.map((bookdata, index) => (
+              <Carousel.Item key={index}>
+                <Book info={bookdata} getBooks={this.getBooks} />
+              </Carousel.Item>
+            ))
+          ) : (
+            <h1>Sorry this book is unavailable! Please search for another.</h1>
+          )}
+        </Carousel>
+      </>
+    );
+  }
+}
+
+class Book extends Component {
+  handleDelete = async (id) => {
+    console.log(id);
+    await axios.delete("http://localhost:3003/books/" + id);
+    this.props.getBooks();
+  };
+
+  render() {
+    return (
+      <>
+        <img
           className="d-block w-100"
           src="https://cdn.pixabay.com/photo/2018/02/17/09/33/fantasy-3159493_960_720.jpg"
           alt={this.props.info.title}
-          />
-          <Carousel.Caption>
+        />
+        <Carousel.Caption>
           <h1>{this.props.info.title}</h1>
-          <h4>{this.props.info.description}</h4>          
-          <Button variant="danger" onClick={() => this.props.onDelete(this.props.info._id, this.props.info.email)}>Delete</Button>
-          </Carousel.Caption>
+          <h4>{this.props.info.description}</h4>
+          <Button
+            variant="danger"
+            onClick={() => this.handleDelete(this.props.info._id)}
+          >
+            Delete
+          </Button>
+        </Carousel.Caption>
       </>
     );
   }

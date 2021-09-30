@@ -7,7 +7,7 @@ export default class LoginButton extends Component {
   constructor(props){
     super(props)
       this.state = {
-        hide: true,
+        show: false,
       }
   }
   
@@ -15,13 +15,13 @@ export default class LoginButton extends Component {
 
   handleClick = (event) =>{
     this.setState({
-      hide: false,
+      show: true,
     })
   }
 
   render() {
 
-    if(this.state.showForm){
+    if(this.state.show){
       return (
         <>
           <LoginForm loginHandler={this.props.loginHandler}/>
