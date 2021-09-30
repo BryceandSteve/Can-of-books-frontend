@@ -8,6 +8,7 @@ import {
   Switch,
   Route
 } from "react-router-dom";
+import axios from 'axios';
 
 class App extends React.Component {
 
@@ -31,6 +32,18 @@ class App extends React.Component {
     })
   }
 
+  handleDelete = async (id, email) => {
+    console.log(id);
+    await axios.delete('http://localhost:3003/books/' + id + '/?email=' + email);
+    this.getBooks();
+  }
+
+  getBooks = async () => {
+    let booksResponse = await axios.get('http://localhost:3003/books');
+    let bookData = booksResponse.data;
+    this.setState({ books: bookData });
+  };
+
   render() {
     return (
       <>
@@ -38,7 +51,7 @@ class App extends React.Component {
           <Header user={this.state.user} onLogout={this.logoutHandler} />
           <Switch>
             <Route exact path="/">
-              <BestBooks />
+              <BestBooks handleDelete={this.handleDelete} />
             </Route>
             {/* TODO: add a route with a path of '/profile' that renders a `Profile` component */}
 
