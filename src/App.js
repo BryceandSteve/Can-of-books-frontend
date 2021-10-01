@@ -54,7 +54,7 @@ export default class App extends React.Component {
           <Header />
             <Switch>
               <Route exact path="/">{this.state.user ? ( <BestBooks user={this.state.user} /> ):( <Login user={this.state.user} loginHandler={this.loginHandler} />)} </Route>
-              <Route path="/BestBooks">{this.state.user ? (<BestBooks user={this.state.user} onDelete={this.handleDelete} /> ):( <Login />)}</Route>
+              <Route path="/BestBooks">{this.state.user ? (<BestBooks user={this.state.user} onDelete={this.handleDelete} onUpdate={this.handleBookUpdate}/> ):( <Login />)}</Route>
               <Route path="/CreateBook">{this.state.user ? (<CreateBook  handleBookCreate={this.handleBookCreate}/> ) : ( <Login />)}</Route>
               <Route path="/UpdateBook">{this.state.user ? (<UpdateBook onUpdate={this.handleBookUpdate}/> ) : ( <Login />)}</Route>
               <Route exact path="/Profile">{this.state.user ? (<Profile user={this.state.user} logoutHandler={this.logoutHandler}/> ): (<Login />)} </Route>

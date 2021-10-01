@@ -7,10 +7,10 @@ export default class createBook extends Component {
     handleSubmit = (event) => {
         event.preventDefault();
         this.props.handleBookCreate({
-            title: event.target.formTitle.value,
-            description: event.target.formDescription.value,
-            status: event.target.formStatus.value,
-            email: event.target.formEmail.value,
+            title: event.target.title.value,
+            description: event.target.description.value,
+            status: event.target.status.value,
+            email: event.target.email.value,
         })
     }
 
@@ -18,20 +18,20 @@ export default class createBook extends Component {
     render(){
         return(
             <Form onSubmit={this.handleSubmit}>
-                <Form.Group className="mb-3" controlId="formTitle">
+                <Form.Group className="mb-3" controlId="title">
                     <Form.Label>Title</Form.Label>
                 <Form.Control type="name" placeholder="Enter book title" />
                 </Form.Group>
-                <Form.Group className="mb-3" controlId="formDescription">
+                <Form.Group className="mb-3" controlId="description">
                     <Form.Label>Description</Form.Label>
                 <Form.Control type="name" placeholder="Enter book description" />
                 </Form.Group>
-                <Form.Group className="mb-3" controlId="formEmail">
+                <Form.Group className="mb-3" controlId="email">
                     <Form.Label>Email</Form.Label>
                 <Form.Control type="name" placeholder="Enter your email" />
                 </Form.Group>
 
-                <Form.Group className="mb-3" controlId="formStatus">
+                <Form.Group className="mb-3" controlId="status">
                     <Form.Label>Status</Form.Label> 
                     <Form.Check type="checkbox" label="Checking book in"/>
                 </Form.Group>

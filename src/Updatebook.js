@@ -5,7 +5,7 @@ import axios from 'axios';
 
 export default class updatebook extends Component {
 
-    handleSubmit = async (event) => {
+    handleUpdate = async (event) => {
         event.preventDefault();
         const bookData = {
             title: event.target.formTitle.value,
@@ -14,7 +14,6 @@ export default class updatebook extends Component {
             email: event.target.formEmail.value,
         }
     
-      this.props.hideForm();
       const email = this.props.user.email;
       const id = this.props.id
   
@@ -26,7 +25,7 @@ export default class updatebook extends Component {
     render() {
         return (
     
-          <Form onSubmit={this.handleSubmit}>
+          <Form onSubmit={this.handleBookUpdate}>
             <Form.Group className="mb-3" controlId="title">
               <Form.Label>Title</Form.Label>
               <Form.Control type="title" placeholder="Title of the book"  />

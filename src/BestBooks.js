@@ -18,7 +18,7 @@ export default class BestBooks extends Component {
   }
 
   getBooks = async () => {
-    let bookAPI = `${server}/books`;
+    let bookAPI = `${server}/books/`;
     console.log(this.props.user);
     if (this.props.user.Email) {
       bookAPI += `?email=${this.props.user.Email}`;
@@ -58,11 +58,12 @@ export default class BestBooks extends Component {
 class Book extends Component {
   handleDelete = async (id) => {
     console.log(id);
-    await axios.delete("http://localhost:3003/books/" + id);
+    await axios.delete(`${server}/books/${id}`);
     this.props.getBooks();
   };
 
   render() {
+    console.log(this.props.info._id)
     return (
       <>
         <img
@@ -79,6 +80,12 @@ class Book extends Component {
           >
             Delete
           </Button>
+          {/* <Button
+            variant="warning"
+            onClick={() => this.props.handleUpdateBook(this.props.info._id)}
+          >
+            Update
+          </Button> */}
         </Carousel.Caption>
       </>
     );
