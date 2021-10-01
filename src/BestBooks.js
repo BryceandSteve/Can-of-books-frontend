@@ -62,6 +62,11 @@ class Book extends Component {
     this.props.getBooks();
   };
 
+  handleUpdate = async (id) => {
+    await axios.put("http://localhost:3003/books/" + id);
+    this.props.getBooks();
+  };
+
   render() {
     return (
       <>
@@ -78,6 +83,12 @@ class Book extends Component {
             onClick={() => this.handleDelete(this.props.info._id)}
           >
             Delete
+          </Button>
+          <Button
+            variant="light"
+            onClick={() => this.handleUpdate(this.props.info._id)}
+          >
+            Update
           </Button>
         </Carousel.Caption>
       </>
